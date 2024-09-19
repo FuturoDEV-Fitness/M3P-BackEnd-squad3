@@ -2,18 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const routes = require("./routes/routes");
 const connection = require("./database/connection");
-const APP_PORT = process.env.APP_PORT || 3000;
-console.log(APP_PORT);
 
 require("dotenv").config();
 
 class Server {
   constructor() {
     this.server = express();
-    this.middlewares(server);
+    this.APP_PORT = process.env.APP_PORT || 3000;
+    this.middlewares();
     this.database();
     this.routes();
-    this.initializeServer(server);
+    this.initializeServer();
   }
 
   async middlewares() {
@@ -39,11 +38,11 @@ class Server {
     console.log("Rotas executadas");
   }
 
-  async initializeServer(server) {
+  async initializeServer() {
     server.listen(APP_PORT, () => {
       console.log(`Servidor rodando na porte: ${APP_PORT}`);
     });
   }
 }
 
-module.exports = { Server };
+module.exports = Server;
