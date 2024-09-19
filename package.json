@@ -1,15 +1,30 @@
 {
   "name": "exercita_1.1_back-end",
   "version": "1.0.0",
-  "description": "## 📖 Descrição",
+  "description": "Progeto final mod_3",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch src/server.js"
+    "start:prod": "node --watch src/index.js",
+    "start:dev": "nodemon src/index.js",
+    "swagger": "node ./autoGen.swagger.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hiedi Ferreira, Junior Pinho, Thaís Gonçalves",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^3.1.5"
+    "nodemon": "^3.1.5",
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "sequelize": "^6.37.3",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }
