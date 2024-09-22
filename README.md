@@ -87,6 +87,16 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 - **PUT** `/locations/:id`: Edição de informações do local.
 - **DELETE** `/locations/:id`: Exclusão de um local para atividade física.
 
+## 📦 Migrations
+
+As migrations são uma parte fundamental do gerenciamento do banco de dados na aplicação. Elas permitem que você crie, modifique e mantenha a estrutura do banco de dados de forma versionada e controlada.
+
+Neste projeto, utilizamos o Sequelize para gerenciar as migrations, o que facilita a criação e o gerenciamento das tabelas e suas relações. As migrations garantem que a estrutura do banco de dados esteja sempre sincronizada com o código da aplicação, permitindo que todos os desenvolvedores trabalhem com a mesma base de dados.
+
+Para visualizar a modelagem das tabelas e as migrations correspondentes, consulte o arquivo anexado abaixo.
+
+![alt text](src/assets/img/image.png)
+
 ## 🚀 Deploy
 
 Para fazer o deploy do projeto, você pode usar serviços como Render. Certifique-se de que o Dockerfile e docker-compose.yaml estão configurados corretamente para gerar a imagem Docker da aplicação e o banco de dados PostgreSQL.
