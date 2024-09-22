@@ -9,14 +9,15 @@ module.exports = {
     await queryInterface,
       createTable("locais", {
         idLocal: {
+          type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER,
           allowNull: false,
         },
         nomeLocal: {
           type: Sequelize.STRING(100),
           allowNull: false,
+          unique: true,
         },
         descricaoLocal: {
           type: Sequelize.TEXT(300),

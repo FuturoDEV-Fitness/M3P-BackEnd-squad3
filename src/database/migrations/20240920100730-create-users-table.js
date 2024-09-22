@@ -7,9 +7,9 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("usuarios", {
       id: {
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
         allowNull: false,
       },
       nome: {
@@ -23,6 +23,7 @@ module.exports = {
       cpf: {
         type: Sequelize.STRING(14),
         allowNull: false,
+        unique: true,
       },
       endereco: {
         type: Sequelize.STRING,
