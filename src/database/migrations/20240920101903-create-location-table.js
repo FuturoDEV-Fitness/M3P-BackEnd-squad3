@@ -26,7 +26,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: "usuarios",
+            model: "Usuario",
             key: "id",
           },
         },
@@ -45,11 +45,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+    await queryInterface, dropTable("locais");
   },
 };
