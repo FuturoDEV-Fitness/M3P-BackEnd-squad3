@@ -3,26 +3,41 @@ const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
 
 const Usuario = connection.define("usuarios", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
   nome: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   sexo: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   cpf: {
     type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   endereco: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   password_hash: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   data_nacimento: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
 });
 
