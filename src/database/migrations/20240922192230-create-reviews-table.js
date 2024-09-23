@@ -43,6 +43,10 @@ module.exports = {
             key: "nome",
           },
         },
+
+        onDelete: "CASCADE",
+        allowNull: false,
+
         idLocal: {
           type: Sequelize.INTEGER,
           allowNull: false,
@@ -63,6 +67,10 @@ module.exports = {
             key: "nomeLocal",
           },
         },
+
+        onDelete: "CASCADE",
+        allowNull: false,
+
         createdAt: {
           type: Sequelize.DATE,
           allowNull: false,
@@ -79,11 +87,11 @@ module.exports = {
       },
     });
 
-    //   await queryInterface.Sequelize.query(`
-    //     ALTER TABLE avaliacoes
-    //     ADD constraint chk_avaliacao
-    //     CHECK (avaliacao IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
-    //     `)
+    await queryInterface.Sequelize.query(`
+        ALTER TABLE avaliacoes
+        ADD constraint chk_avaliacao
+        CHECK (avaliacao IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
+        `);
   },
 
   async down(queryInterface, Sequelize) {
