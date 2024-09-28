@@ -4,8 +4,8 @@
   "description": "Progeto final mod_3",
   "main": "index.js",
   "scripts": {
-    "start:prod": "node --watch src/index.js",
-    "start:dev": "node src/index.js",
+    "start:prod": "nodemon src/index.js",
+    "start:dev": "nodemon src/index.js",
     "swagger": "node ./autoGen.swagger.js"
   },
   "keywords": [],

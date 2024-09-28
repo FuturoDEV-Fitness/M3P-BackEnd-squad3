@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  exercita_1.1_back-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: projeto-final
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./:/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres-article
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: exercita365
+    volumes:
+      - ./data_proj_fin:/var/lib/postgresql/data
