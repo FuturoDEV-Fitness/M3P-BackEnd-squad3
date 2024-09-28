@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.TEXT(300),
         allowNull: false,
       },
+      itens_checkbox: {
+        type: Sequelize.JSONB,
+        allowNull: false,
+      },
       rua_endereco: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -45,6 +49,10 @@ module.exports = {
       cep_endereco: {
         type: Sequelize.STRING,
         allowNull: true,
+      },
+      complemento_endereco: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
       },
       horario_funcionamento: {
         type: Sequelize.STRING,
