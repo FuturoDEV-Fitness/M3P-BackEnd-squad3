@@ -39,8 +39,8 @@ class Server {
   }
 
   async initializeServer() {
-    server.listen(APP_PORT, () => {
-      console.log(`Servidor rodando na porte: ${APP_PORT}`);
+    this.server.listen(this.APP_PORT, () => {
+      console.log(`Servidor rodando na porte: ${this.APP_PORT}`);
     });
   }
 }

@@ -24,66 +24,41 @@ module.exports = {
         type: Sequelize.TEXT(250),
         allowNull: true,
       },
+
       idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Usuario",
+          model: "usuarios",
           key: "id",
         },
-
         onDelete: "CASCADE",
         allowNull: false,
+      },
 
-        nomeUsuario: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          references: {
-            model: "Usuario",
-            key: "nome",
-          },
+      idLocal: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "locais",
+          key: "idLocal",
         },
-
         onDelete: "CASCADE",
         allowNull: false,
+      },
 
-        idLocal: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: "Local",
-            key: "idLocal",
-          },
-        },
-
-        onDelete: "CASCADE",
+      createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-
-        nomeLocal: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          references: {
-            model: "Local",
-            key: "nomeLocal",
-          },
-        },
-
-        onDelete: "CASCADE",
+        defaultValue: Sequelize.fn("now"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-
-        createdAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn("now"),
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn("now"),
-        },
-        deletedAt: {
-          type: Sequelize.DATE,
-        },
+        defaultValue: Sequelize.fn("now"),
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
       },
     });
 
