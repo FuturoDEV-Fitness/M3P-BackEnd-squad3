@@ -40,7 +40,7 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/ThaisEFAG/Exercita_1.1_Back-end.git
+   git clone https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad3.git
    cd exercita365
    ```
 
