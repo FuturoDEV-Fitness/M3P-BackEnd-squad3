@@ -17,14 +17,6 @@ const Local = connection.define("locais", {
   descricaoLocal: {
     type: DataTypes.STRING,
   },
-  idUsuario: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Usuario",
-      key: "id",
-    },
-  },
   rua_endereco: {
     type: DataTypes.STRING(90),
     allowNull: true,
@@ -61,6 +53,16 @@ const Local = connection.define("locais", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  idUsuario: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "Usuario",
+      key: "id",
+    },
+  },
+
+  // Usuario.hasMany(Post, { onDelete: 'CASCADE' });
 });
 
 module.exports = Local;

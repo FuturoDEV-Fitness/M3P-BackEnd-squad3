@@ -40,6 +40,10 @@ const Usuario = connection.define("usuarios", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 // Usuario.belongsToMany(Local, {
