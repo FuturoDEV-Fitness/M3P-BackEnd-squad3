@@ -24,66 +24,49 @@ module.exports = {
         type: Sequelize.TEXT(250),
         allowNull: true,
       },
+
       idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Usuario",
+          model: "usuarios",
           key: "id",
         },
-
         onDelete: "CASCADE",
         allowNull: false,
+      },
 
-        nomeUsuario: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          references: {
-            model: "Usuario",
-            key: "nome",
-          },
+      idLocal: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "locais",
+          key: "idLocal",
         },
-        idLocal: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: "Local",
-            key: "idLocal",
-          },
-        },
-
         onDelete: "CASCADE",
         allowNull: false,
+      },
 
-        nomeLocal: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          references: {
-            model: "Local",
-            key: "nomeLocal",
-          },
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn("now"),
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.fn("now"),
-        },
-        deletedAt: {
-          type: Sequelize.DATE,
-        },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("now"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("now"),
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
       },
     });
 
-    //   await queryInterface.Sequelize.query(`
-    //     ALTER TABLE avaliacoes
-    //     ADD constraint chk_avaliacao
-    //     CHECK (avaliacao IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
-    //     `)
+    await queryInterface.Sequelize.query(`
+        ALTER TABLE avaliacoes
+        ADD constraint chk_avaliacao
+        CHECK (avaliacao IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
+        `);
   },
 
   async down(queryInterface, Sequelize) {

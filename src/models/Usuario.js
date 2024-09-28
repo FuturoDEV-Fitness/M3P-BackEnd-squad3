@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
+const Local = require("./Local");
 
 const Usuario = connection.define("usuarios", {
   id: {
@@ -40,6 +41,10 @@ const Usuario = connection.define("usuarios", {
     allowNull: false,
   },
 });
+
+// Usuario.belongsToMany(Local, {
+//   through:
+// })
 
 Usuario.beforeSave((usuario) => {
   if (usuario.password_hash) {
