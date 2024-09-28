@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   exercita_1.1_back-end:
     build:
