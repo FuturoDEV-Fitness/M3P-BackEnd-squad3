@@ -113,6 +113,10 @@ Sinta-se à vontade para abrir Issues e Pull Requests. Siga as seguintes conven�
 - **test**: Adicionar ou corrigir testes.
 - **chore**: Atualizações em tarefas de manutenção (builds, pacotes, etc).
 
+  ## Melhorias
+
+- Criar uma tabela de somente de exercícios
+
 ## 👤 Autores
 
 hiediferreira, juniorpinhodev, ThaisEFAG
