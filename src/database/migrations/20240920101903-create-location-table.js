@@ -22,6 +22,42 @@ module.exports = {
         type: Sequelize.TEXT(300),
         allowNull: false,
       },
+      rua_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      numero_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      bairro_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      cidade_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      estado_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      cep_endereco: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      horario_funcionamento: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      latitude: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      longitude: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
