@@ -3,6 +3,9 @@ WORKDIR /app-node
 ARG PORT_BUILD=3333
 ENV PORT=$PORT_BUILD
 EXPOSE $PORT_BUILD
-COPY . .
+COPY package*.json ./
 RUN npm install
-ENTRYPOINT ["npm", "run", "start:dev"]
+
+COPY . .
+CMD ["npm", "run", "start:dev"]
+# ENTRYPOINT ["npm", "run", "start:dev"]
