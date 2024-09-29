@@ -116,6 +116,8 @@ Sinta-se à vontade para abrir Issues e Pull Requests. Siga as seguintes conven�
   ## Melhorias
 
 - Criar uma tabela de somente de exercícios
+- Adicionar uma caixa para diálogo com o administrador
+- adicionar formulário para críticas e sujestões
 
 ## 👤 Autores
 
