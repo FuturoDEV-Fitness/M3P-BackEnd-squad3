@@ -140,7 +140,7 @@ class LocalController {
       const idUsuario = request.idUsuario;
 
       // Encontra o local específico e verifica se pertence ao usuário autenticado
-      const local = await Local.findOne({ where: { id: local_id, usuarioId } });
+      const local = await Local.findOne({ where: { id: idLocal, idUsuario } });
 
       if (!local) {
         return response
