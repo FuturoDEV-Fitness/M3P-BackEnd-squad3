@@ -4,6 +4,9 @@ const AutenticUsuarioController = require("../controllers/AutenticUsuarioControl
 const autenticUsuarioRoutes = new Router();
 
 autenticUsuarioRoutes.post("/login", AutenticUsuarioController.login);
-autenticUsuarioRoutes.post("/", AutenticUsuarioController.criarConta);
+autenticUsuarioRoutes.post(
+  "/cadastroUsuario",
+  AutenticUsuarioController.criarConta
+);
 
 module.exports = autenticUsuarioRoutes;
