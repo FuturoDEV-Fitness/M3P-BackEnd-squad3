@@ -15,11 +15,11 @@ const Usuario = connection.define("usuarios", {
     allowNull: false,
   },
   sexo: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("Masculino", "Feminino", "Outro"),
     allowNull: false,
   },
   cpf: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(11),
     allowNull: false,
     unique: true,
   },
