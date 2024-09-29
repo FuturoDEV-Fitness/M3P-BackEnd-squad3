@@ -39,8 +39,11 @@ class Server {
   }
 
   async initializeServer() {
+    const timestamp = new Date().toISOString();
     this.server.listen(this.APP_PORT, () => {
-      console.log(`Servidor rodando na porta: ${this.APP_PORT}`);
+      console.log(
+        `${timestamp} - Servidor rodando na porta: ${this.APP_PORT} no container e rodando na porta 8080 na máquina`
+      );
     });
   }
 }

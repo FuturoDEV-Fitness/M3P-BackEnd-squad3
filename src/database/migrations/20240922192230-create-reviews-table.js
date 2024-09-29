@@ -21,8 +21,8 @@ module.exports = {
         },
       },
       feedback: {
-        type: Sequelize.TEXT(250),
-        allowNull: true,
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
 
       idUsuario: {
@@ -59,13 +59,14 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("NOW()"),
       },
     });
 
-    await queryInterface.Sequelize.query(`
+    await queryInterface.sequelize.query(`
         ALTER TABLE avaliacoes
         ADD constraint chk_avaliacao
-        CHECK (avaliacao IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
+        CHECK (nota IN (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0));
         `);
   },
 
