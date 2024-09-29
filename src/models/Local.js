@@ -18,6 +18,7 @@ const Local = connection.define(
     },
     descricaoLocal: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     itens_checkbox: {
       type: DataTypes.JSONB,
