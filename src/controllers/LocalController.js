@@ -82,12 +82,13 @@ class LocalController {
       const { nomeLocal } = request.query;
 
       const local = await Local.findAll({
-        order: [["nome_local", "ASC"]],
+        order: [["nomeLocal", "ASC"]],
         where: nomeLocal ? { nomeLocal: nomeLocal } : {},
         attributes: [
           ["id", "identificador"],
           "nomeLocal",
           "descricaoLocal",
+          "itens_checkbox",
           "rua_endereco",
           "numero_endereco",
           "bairro_endereco",
