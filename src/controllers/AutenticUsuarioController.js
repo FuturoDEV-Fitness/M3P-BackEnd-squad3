@@ -14,7 +14,7 @@ class AutenticUsuarioController {
         !dados.cpf ||
         !dados.endereco ||
         !dados.email ||
-        !dados.password_hash ||
+        !dados.password ||
         !dados.data_nascimento
       ) {
         return response.status(400).json({
@@ -28,7 +28,7 @@ class AutenticUsuarioController {
           .json({ mensagem: "O email está em formato inválido!" });
       }
 
-      if (dados.password_hash.length < 5 || dados.password_hash.length > 10) {
+      if (dados.password.length < 5 || dados.password.length > 10) {
         return response
           .status(400)
           .json({ mensagem: "A senha deve ser entre 5 e 10 dígitos" });
@@ -52,7 +52,7 @@ class AutenticUsuarioController {
         cpf: dados.cpf,
         endereco: dados.endereco,
         email: dados.email,
-        password_hash: dados.password_hash,
+        password: dados.password,
         data_nascimento: dados.data_nascimento,
       });
       return response.status(201).json({
@@ -69,7 +69,7 @@ class AutenticUsuarioController {
   }
 
   async login(request, response) {
-    const { email, password_hash } = request.body;
+    const { email, password } = request.body;
 
     try {
       const user = await Usuario.findOne({ where: { email } });
@@ -77,7 +77,7 @@ class AutenticUsuarioController {
         return response.status(404).json({ mensagem: "Conta não encontrada" });
       }
 
-      const senhaCorreta = compareSync(password_hash, user.password_hash);
+      const senhaCorreta = compareSync(password, user.password);
 
       if (!senhaCorreta) {
         return response
