@@ -88,7 +88,7 @@ class AutenticUsuarioController {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      return response.status(200).json({ token: token, nome: user.nome }); // Corrigido aqui
+      return response.status(200).json({ token: token, nome: user.nome, id: user.id }); // Corrigido aqui
     } catch (error) {
       console.error("Server error" + error);
       return response.status(500).json({ mensagem: "Erro ao realizar login" });
