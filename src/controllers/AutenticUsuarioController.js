@@ -20,7 +20,7 @@ class AutenticUsuarioController {
         !dados.data_nascimento
       ) {
         return response.status(400).json({
-          mensage: "Todos os campos obrigatórios devem ser preenchidos",
+          mensagem: "Todos os campos obrigatórios devem ser preenchidos",
         });
       }
 

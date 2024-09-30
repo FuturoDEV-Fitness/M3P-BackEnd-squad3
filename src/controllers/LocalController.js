@@ -21,7 +21,8 @@ class LocalController {
         !dados.idUsuario)
       ) {
         return response.status(400).json({
-          mensagem: "Nome do local, CEP, localidade e usuário são obrigatórios",
+          mensagem:
+            "Nome do local, CEP, localidade, tipos de exercícios e usuário são obrigatórios",
         });
       }
 

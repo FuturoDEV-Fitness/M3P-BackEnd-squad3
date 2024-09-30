@@ -1,4 +1,5 @@
 const Usuario = require("../models/Usuario");
+const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
 class UsuarioController {
   async listarUsuarios(request, response) {
@@ -34,7 +35,7 @@ class UsuarioController {
     try {
       const { idUsuario } = request.params;
       const dados = request.body;
-
+      const { nome, sexo, endereco, email, data_nascimento } = dados;
       const usuario = await Usuario.findOne({
         where: { idUsuario },
       });
@@ -44,12 +45,29 @@ class UsuarioController {
           mensagem: "Usuario não existe",
         });
       }
+      if (padraoEmail.test(dados.email) === false) {
+        return response
+          .status(400)
+          .json({ mensagem: "O email está em formato inválido!" });
+      }
+
+      if (!nome || !sexo || !endereco || !email || !data_nascimento) {
+        return response.status(400).json({
+          mensagem: "Todos os campos obrigatórios devem ser preenchidos",
+        });
+      }
 
       usuario.nome = nome || dados.nome;
       usuario.sexo = sexo || dados.sexo;
       usuario.endereco = endereco || dados.endereco;
       usuario.email = email || dados.email;
       usuario.data_nascimento = data_nascimento || dados.data_nascimento;
+
+      await usuario.save();
+
+      return response
+        .status(200)
+        .json({ mensagem: "Usuário alterado com sucesso!" });
     } catch (error) {
       console.error("Server error: " + error);
       return response.status(500).json({ mensagem: "Erro ao editar os dados" });
