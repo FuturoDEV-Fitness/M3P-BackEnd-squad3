@@ -1,6 +1,6 @@
 const axios = require("axios");
 const Local = require("../models/Local");
-const Usuario = require("../models/users");
+const Usuario = require("../models/Usuario");
 
 class LocalController {
   // Método para criar um novo local
