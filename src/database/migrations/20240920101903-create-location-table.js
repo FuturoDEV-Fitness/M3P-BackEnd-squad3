@@ -24,7 +24,7 @@ module.exports = {
       },
       itens_checkbox: {
         type: Sequelize.JSONB,
-        allowNull: false,
+        allowNull: true,
       },
       rua_endereco: {
         type: Sequelize.STRING,

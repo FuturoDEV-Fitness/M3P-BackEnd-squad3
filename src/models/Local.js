@@ -18,11 +18,11 @@ const Local = connection.define(
     },
     descricaoLocal: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     itens_checkbox: {
       type: DataTypes.JSONB,
-      allowNull: false,
+      allowNull: true,
     },
     rua_endereco: {
       type: DataTypes.STRING(90),
@@ -50,7 +50,7 @@ const Local = connection.define(
     },
     complemento_endereco: {
       type: DataTypes.STRING(50),
-      allowNull: false,
+      allowNull: true,
     },
     horario_funcionamento: {
       type: DataTypes.STRING,
