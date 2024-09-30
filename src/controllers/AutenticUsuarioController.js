@@ -1,8 +1,6 @@
 const Usuario = require("../models/Usuario");
 const { compareSync } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const Usuario = require("../models/Usuario");
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
 class AutenticUsuarioController {
@@ -30,10 +28,7 @@ class AutenticUsuarioController {
           .json({ mensagem: "O email está em formato inválido!" });
       }
 
-      if (
-        dados.password_hash?.length <= 5 ||
-        dados.password_hash?.length >= 10
-      ) {
+      if (dados.password_hash.length < 5 || dados.password_hash.length > 10) {
         return response
           .status(400)
           .json({ mensagem: "A senha deve ser entre 5 e 10 dígitos" });
@@ -60,7 +55,7 @@ class AutenticUsuarioController {
         password_hash: dados.password_hash,
         data_nascimento: dados.data_nascimento,
       });
-      return res.status(201).json({
+      return response.status(201).json({
         nome: usuario.nome,
         email: usuario.email,
         createdAt: usuario.createdAt,
@@ -93,7 +88,7 @@ class AutenticUsuarioController {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      return response.status(200).json({ token: token, nome: usuario.nome });
+      return response.status(200).json({ token: token, nome: user.nome }); // Corrigido aqui
     } catch (error) {
       console.error("Server error" + error);
       return response.status(500).json({ mensagem: "Erro ao realizar login" });
