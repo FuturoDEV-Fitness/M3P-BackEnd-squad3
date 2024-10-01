@@ -8,6 +8,15 @@ class AutenticUsuarioController {
     try {
       const dados = request.body;
 
+      // const dataRequired = object.value(dados);
+      // for (const field of dataRequired) {
+      //   if (!dados[field]) {
+      //     return response.status(400).json({
+      //       mensagem: "Todos os campos obrigatórios devem ser preenchidos",
+      //     });
+      //   }
+      // }
+
       if (
         !dados.nome ||
         !dados.sexo ||
