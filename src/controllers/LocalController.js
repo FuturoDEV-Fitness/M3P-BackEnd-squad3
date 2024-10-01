@@ -1,12 +1,24 @@
+const { Op } = require("sequelize");
 const axios = require("axios");
 const Local = require("../models/Local");
-const Usuario = require("../models/users");
+const Usuario = require("../models/Usuario");
 
 class LocalController {
   // Método para criar um novo local
   async criarLocal(request, response) {
     try {
       const dados = request.body;
+
+      const fieldRequired = object.value(dados);
+
+      // for (field of fieldRequired) {
+      //   if (!dados[field]) {
+      //     return response.status(400).json({
+      //       mensagem:
+      //         "Nome do local, CEP, localidade, tipos de exercícios e usuário são obrigatórios",
+      //     });
+      //   }
+      // }
 
       // Validação dos dados
       if (
@@ -84,7 +96,7 @@ class LocalController {
 
       const local = await Local.findAll({
         order: [["nomeLocal", "ASC"]],
-        where: nomeLocal ? { nomeLocal: nomeLocal } : {},
+        where: nomeLocal ? { nomeLocal: { [Op.like]: `%${nomeLocal}%` } } : {},
         attributes: [
           ["id", "identificador"],
           "nomeLocal",
@@ -178,6 +190,23 @@ class LocalController {
           .status(404)
           .json({ mensagem: "Local não encontrado ou acesso não autorizado" });
       }
+
+      // const {
+      //   nomeLocal,
+      //   descricaoLocal,
+      //   itens_checkbox,
+      //   rua_endereco,
+      //   numero_endereco,
+      //   bairro_endereco,
+      //   cidade_endereco,
+      //   estado_endereco,
+      //   cep_endereco,
+      //   complemento_endereco,
+      //   horario_funcionamento,
+      //   latitude,
+      //   longitude,
+      //   google_maps_link,
+      // } = dados;
 
       // Atualiza o local
       local.nomeLocal = nome || dados.nomeLocal;

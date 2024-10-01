@@ -1,12 +1,15 @@
+const { Op } = require("sequelize");
 const Usuario = require("../models/Usuario");
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
 class UsuarioController {
   async listarUsuarios(request, response) {
     try {
+      const { nome } = request.query;
+
       const usuarios = await Usuario.findAll({
         order: [["nome", "ASC"]],
-        where: nome ? { nome: nome } : {},
+        where: nome ? { nome: { [Op.like]: `%${nome}%` } } : {},
         attributes: [
           ["id", "identificador"],
           "nome",
@@ -16,9 +19,9 @@ class UsuarioController {
         ],
       });
 
-      if (usuarios.lenth === 0) {
+      if (usuarios.length === 0) {
         return response
-          .status(400)
+          .status(204)
           .json({ mensagem: "Não há usuários cadastrados" });
       }
 
@@ -33,18 +36,10 @@ class UsuarioController {
 
   async editarUsuario(request, response) {
     try {
-      const { idUsuario } = request.params;
+      const idUsuario = request.user.id;
       const dados = request.body;
       const { nome, sexo, endereco, email, data_nascimento } = dados;
-      const usuario = await Usuario.findOne({
-        where: { idUsuario },
-      });
 
-      if (!usuario) {
-        return response.status(404).json({
-          mensagem: "Usuario não existe",
-        });
-      }
       if (padraoEmail.test(dados.email) === false) {
         return response
           .status(400)
@@ -54,6 +49,16 @@ class UsuarioController {
       if (!nome || !sexo || !endereco || !email || !data_nascimento) {
         return response.status(400).json({
           mensagem: "Todos os campos obrigatórios devem ser preenchidos",
+        });
+      }
+
+      const usuario = await Usuario.findOne({
+        where: { idUsuario },
+      });
+
+      if (!usuario) {
+        return response.status(404).json({
+          mensagem: "Usuario não existe",
         });
       }
 
@@ -74,9 +79,22 @@ class UsuarioController {
     }
   }
 
-  async deletarUsuario(request, resposne) {
+  async deletarUsuario(request, response) {
     try {
-      const dados = await findByPk(idUsuairio);
+      const idUsuario = request.user.id;
+      const usuario = await Usuario.findOne({
+        where: { id: idUsuario },
+      });
+
+      if (!usuario) {
+        return response
+          .status(404)
+          .json({ mensagem: "Usuario não encontrado" });
+      }
+      await usuario.destroy();
+      return response
+        .status(200)
+        .json({ mensagem: "Usuario deletado com sucesso. ", usuario });
     } catch (error) {
       console.error("Server error: " + error);
       return response

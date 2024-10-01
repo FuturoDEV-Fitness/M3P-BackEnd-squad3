@@ -1,8 +1,6 @@
 const Usuario = require("../models/Usuario");
 const { compareSync } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const Usuario = require("../models/Usuario");
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
 class AutenticUsuarioController {
@@ -10,13 +8,22 @@ class AutenticUsuarioController {
     try {
       const dados = request.body;
 
+      // const dataRequired = object.value(dados);
+      // for (const field of dataRequired) {
+      //   if (!dados[field]) {
+      //     return response.status(400).json({
+      //       mensagem: "Todos os campos obrigatórios devem ser preenchidos",
+      //     });
+      //   }
+      // }
+
       if (
         !dados.nome ||
         !dados.sexo ||
         !dados.cpf ||
         !dados.endereco ||
         !dados.email ||
-        !dados.password_hash ||
+        !dados.password ||
         !dados.data_nascimento
       ) {
         return response.status(400).json({
@@ -30,10 +37,7 @@ class AutenticUsuarioController {
           .json({ mensagem: "O email está em formato inválido!" });
       }
 
-      if (
-        dados.password_hash?.length <= 5 ||
-        dados.password_hash?.length >= 10
-      ) {
+      if (dados.password.length < 5 || dados.password.length > 10) {
         return response
           .status(400)
           .json({ mensagem: "A senha deve ser entre 5 e 10 dígitos" });
@@ -57,10 +61,10 @@ class AutenticUsuarioController {
         cpf: dados.cpf,
         endereco: dados.endereco,
         email: dados.email,
-        password_hash: dados.password_hash,
+        password: dados.password,
         data_nascimento: dados.data_nascimento,
       });
-      return res.status(201).json({
+      return response.status(201).json({
         nome: usuario.nome,
         email: usuario.email,
         createdAt: usuario.createdAt,
@@ -74,7 +78,7 @@ class AutenticUsuarioController {
   }
 
   async login(request, response) {
-    const { email, password_hash } = request.body;
+    const { email, password } = request.body;
 
     try {
       const user = await Usuario.findOne({ where: { email } });
@@ -82,7 +86,7 @@ class AutenticUsuarioController {
         return response.status(404).json({ mensagem: "Conta não encontrada" });
       }
 
-      const senhaCorreta = compareSync(password_hash, user.password_hash);
+      const senhaCorreta = compareSync(password, user.password);
 
       if (!senhaCorreta) {
         return response
@@ -93,7 +97,9 @@ class AutenticUsuarioController {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
-      return response.status(200).json({ token: token, nome: usuario.nome });
+      return response
+        .status(200)
+        .json({ token: token, nome: user.nome, id: user.id }); // Corrigido aqui
     } catch (error) {
       console.error("Server error" + error);
       return response.status(500).json({ mensagem: "Erro ao realizar login" });
