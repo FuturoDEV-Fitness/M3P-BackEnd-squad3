@@ -3,7 +3,7 @@ const connection = require("../database/connection");
 const Usuario = require("./Usuario");
 const Local = require("./Local");
 
-const Avaliacao = connection.define("locais", {
+const Avaliacao = connection.define("avaliacoes", {
   idAvaliacao: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -30,14 +30,6 @@ const Avaliacao = connection.define("locais", {
       key: "id",
     },
   },
-  nomeUsuario: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    references: {
-      model: "Usuarios",
-      key: "nome",
-    },
-  },
   idLocal: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -46,15 +38,9 @@ const Avaliacao = connection.define("locais", {
       key: "idLocal",
     },
   },
-  nomeLocal: {
-    type: DataTypes,
-    STRING,
-    allowNull: false,
-    references: {
-      model: "Local",
-      key: "nomeLocal",
-    },
-  },
 });
+
+Local.belongsTo(Avaliacao);
+Usuario.belongsToMany(Avaliacao);
 
 module.exports = Avaliacao;

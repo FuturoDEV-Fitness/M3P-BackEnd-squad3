@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-const Usuario = require("./Usuario");
+const Avaliacao = require("./Avaliacao");
 
 const Local = connection.define(
   "locais",
@@ -84,5 +84,7 @@ const Local = connection.define(
     tableName: "exercise_locals",
   }
 );
+
+Avaliacao.belongsTo(Local);
 
 module.exports = Local;
