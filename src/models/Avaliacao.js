@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-const Usuario = require("./Usuario");
-const Local = require("./Local");
 
 const Avaliacao = connection.define("avaliacoes", {
   idAvaliacao: {
@@ -39,8 +37,5 @@ const Avaliacao = connection.define("avaliacoes", {
     },
   },
 });
-
-Local.belongsTo(Avaliacao);
-Usuario.belongsToMany(Avaliacao);
 
 module.exports = Avaliacao;

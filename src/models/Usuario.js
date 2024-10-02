@@ -54,7 +54,7 @@ Usuario.beforeSave((usuario) => {
   return usuario;
 });
 
-Local.belongsTo(Usuario);
-Avaliacao.belongsTo(Usuario);
+Usuario.hasMany(Local);
+Usuario.hasMany(Avaliacao);
 
 module.exports = Usuario;

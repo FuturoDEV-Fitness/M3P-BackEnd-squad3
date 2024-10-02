@@ -85,6 +85,6 @@ const Local = connection.define(
   }
 );
 
-Avaliacao.belongsTo(Local);
+Local.hasMany(Avaliacao);
 
 module.exports = Local;
