@@ -12,7 +12,8 @@ const locaisRoutes = require("./locais.routes.js");
 const router = Router();
 
 router.use("/usuarios", verifyToken, usuarioRoutes);
-router.use("/autentic", autenticUsuarioRoutes);
+router.use("/autentic/login", autenticUsuarioRoutes);
+router.use("/autentic/cadastro", autenticUsuarioRoutes);
 router.use("/locais", verifyToken, locaisRoutes);
 
 module.exports = router;

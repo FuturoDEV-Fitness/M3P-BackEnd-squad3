@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-const Avaliacao = require("./Avaliacao");
 
 const Local = connection.define(
   "locais",
@@ -72,7 +71,7 @@ const Local = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Usuario",
+        model: "usuarios",
         key: "id",
       },
     },
@@ -85,6 +84,13 @@ const Local = connection.define(
   }
 );
 
-Local.hasMany(Avaliacao);
+Local.associate = function (models) {
+  Local.hasMany(models.Avaliacao, {
+    foreignKey: "idLocal",
+    as: "avaliacoes",
+  });
+};
+
+// Local.hasMany(Avaliacao, { foreignKey: "idLocal" });
 
 module.exports = Local;

@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
+// const Usuario = require("./Usuario");
+const Local = require("./Local");
 
 const Avaliacao = connection.define("avaliacoes", {
   idAvaliacao: {
@@ -21,10 +23,10 @@ const Avaliacao = connection.define("avaliacoes", {
     allowNull: true,
   },
   idUsuario: {
-    type: DataTypes,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Usuario",
+      model: "usuarios",
       key: "id",
     },
   },
@@ -32,10 +34,14 @@ const Avaliacao = connection.define("avaliacoes", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Local",
+      model: "locais",
       key: "idLocal",
     },
   },
 });
+
+// Avaliacao.associate = (models) => {
+//   Avaliacao.belongsTo(models.locais, { foreignKey : "idLocal" })
+// }
 
 module.exports = Avaliacao;
