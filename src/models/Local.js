@@ -91,6 +91,4 @@ Local.associate = function (models) {
   });
 };
 
-// Local.hasMany(Avaliacao, { foreignKey: "idLocal" });
-
 module.exports = Local;
