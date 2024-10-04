@@ -27,7 +27,7 @@ class RatingController {
         where: { locationId },
         include: [{
           model: Local,
-          attributes: ['name', 'description'], // Incluir atributos do modelo Local, se necessário
+          attributes: ['name', 'description'], 
         }],
       });
 

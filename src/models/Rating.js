@@ -1,7 +1,9 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
+const Usuario = require("./Usuario");
+const Local = require("./Local");
 
-const Avaliacao = connection.define("avaliacoes", {
+const Rating = connection.define("ratings", {
   idAvaliacao: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -24,21 +26,38 @@ const Avaliacao = connection.define("avaliacoes", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "usuarios", // Nome correto da tabela de usuários
+      model: "Usuario",
       key: "id",
+    },
+  },
+  nomeUsuario: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: "Usuario",
+      key: "nome",
     },
   },
   idLocal: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "locais", // Nome correto da tabela de locais
+      model: "exercise_locals", 
       key: "idLocal",
     },
   },
-}, {
-  timestamps: true,
-  tableName: "avaliacoes",
+  nomeLocal: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: "exercise_locals", 
+      key: "nomeLocal",
+    },
+  },
 });
 
-module.exports = Avaliacao;
+// Estabelecendo os relacionamentos
+Rating.belongsTo(Usuario, { foreignKey: 'idUsuario' });
+Rating.belongsTo(Local, { foreignKey: 'idLocal' });
+
+module.exports = Rating;
