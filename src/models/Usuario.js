@@ -1,8 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
-const Local = require("./Local");
-const Avaliacao = require("./Avaliacao");
+
 
 const Usuario = connection.define("usuarios", {
   id: {
@@ -37,7 +36,7 @@ const Usuario = connection.define("usuarios", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  data_nacimento: {
+  data_nascimento: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -54,7 +53,16 @@ Usuario.beforeSave((usuario) => {
   return usuario;
 });
 
-Usuario.hasMany(Local);
-Usuario.hasMany(Avaliacao);
+Usuario.associate = function (models) {
+  Usuario.hasMany(models.Avaliacao, {
+    foreignKey: "idUsuario",
+    as: "avaliacoes",
+  });
+
+  Usuario.hasMany(models.Local, {
+    foreignKey: "idUsuario",
+    as: "locais",
+  });
+};
 
 module.exports = Usuario;

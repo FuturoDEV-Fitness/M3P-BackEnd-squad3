@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
+const Usuario = require("./Usuario");
+const Local = require("./Local");
 
 const Rating = connection.define("ratings", {
   idAvaliacao: {
@@ -24,7 +26,7 @@ const Rating = connection.define("ratings", {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "Usuario",
+      model: "usuarios",
       key: "id",
     },
   },
@@ -32,7 +34,7 @@ const Rating = connection.define("ratings", {
     type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: "Usuario",
+      model: "usuarios",
       key: "nome",
     },
   },
