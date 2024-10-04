@@ -1,7 +1,7 @@
 const { Router } = require("express");
 
-//const SwaggerUI = require("swagger-ui-express");
-//const swaggerDocument = require("src/swagger/doc.swagger.json");
+const SwaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("../swagger/doc.swagger.json");
 
 const verifyToken = require("../middlewares/verifyToken.js");
 
