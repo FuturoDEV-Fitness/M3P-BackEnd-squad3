@@ -1,11 +1,7 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 
-<<<<<<< HEAD:src/models/Avaliacao.js
-const Avaliacao = connection.define("avaliacoes", {
-=======
 const Rating = connection.define("ratings", {
->>>>>>> feature/models.rating:src/models/Rating.js
   idAvaliacao: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -32,8 +28,6 @@ const Rating = connection.define("ratings", {
       key: "id",
     },
   },
-<<<<<<< HEAD:src/models/Avaliacao.js
-=======
   nomeUsuario: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -42,7 +36,6 @@ const Rating = connection.define("ratings", {
       key: "nome",
     },
   },
->>>>>>> feature/models.rating:src/models/Rating.js
   idLocal: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -51,8 +44,6 @@ const Rating = connection.define("ratings", {
       key: "idLocal",
     },
   },
-<<<<<<< HEAD:src/models/Avaliacao.js
-=======
   nomeLocal: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -61,7 +52,6 @@ const Rating = connection.define("ratings", {
       key: "nomeLocal",
     },
   },
->>>>>>> feature/models.rating:src/models/Rating.js
 });
 
 // Estabelecendo os relacionamentos
