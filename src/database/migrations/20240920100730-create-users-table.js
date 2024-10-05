@@ -25,6 +25,10 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      cep: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       endereco: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -42,9 +46,9 @@ module.exports = {
         type: Sequelize.STRING(10),
         allowNull: true,
       },
-      isAdmin: {
+      isLog: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

@@ -3,42 +3,28 @@ const Usuario = require("../models/Usuario");
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 
 class UsuarioController {
-  async listarUsuarios(request, response) {
+  async listarUm(request, response) {
     try {
-      const { nome } = request.query;
+      const id = request.params.id;
 
-      const usuarios = await Usuario.findAll({
-        order: [["nome", "ASC"]],
-        where: nome ? { nome: { [Op.like]: `%${nome}%` } } : {},
-        attributes: [
-          ["id", "identificador"],
-          "nome",
-          "sexo",
-          "email",
-          "isAdmin",
-        ],
-      });
+      const usuario = await Usuario.findByPk(id);
 
-      if (usuarios.length === 0) {
-        return response
-          .status(204)
-          .json({ mensagem: "Não há usuários cadastrados" });
+      if (usuario.length === 0) {
+        return response.status(404).json({ mensagem: "Índice não encontrado" });
       }
 
-      return response
-        .status(200)
-        .json({ mensagem: "Usuário listado com sucesso", usuarios });
+      response.json(usuario);
     } catch (error) {
-      console.log("Server erro" + error);
-      return response.status(500).json({ mensagem: "Erro ao listar usuários" });
+      console.log("Server error" + error);
+      return response.status(500).json({ mensagem: "Não foi possível listar" });
     }
   }
-
   async editarUsuario(request, response) {
     try {
-      const idUsuario = request.user.id;
+      const idUsuario = request.params.id;
       const dados = request.body;
-      const { nome, sexo, endereco, email, data_nascimento } = dados;
+      const { nome, sexo, cep_endereco, endereco, email, data_nascimento } =
+        dados;
 
       if (padraoEmail.test(dados.email) === false) {
         return response
@@ -46,15 +32,20 @@ class UsuarioController {
           .json({ mensagem: "O email está em formato inválido!" });
       }
 
-      if (!nome || !sexo || !endereco || !email || !data_nascimento) {
+      if (
+        !nome ||
+        !sexo ||
+        !cep_endereco ||
+        !endereco ||
+        !email ||
+        !data_nascimento
+      ) {
         return response.status(400).json({
           mensagem: "Todos os campos obrigatórios devem ser preenchidos",
         });
       }
 
-      const usuario = await Usuario.findOne({
-        where: { idUsuario },
-      });
+      const usuario = await Usuario.findByPk(idUsuario);
 
       if (!usuario) {
         return response.status(404).json({
@@ -64,15 +55,14 @@ class UsuarioController {
 
       usuario.nome = nome || dados.nome;
       usuario.sexo = sexo || dados.sexo;
+      usuario.cep_endereco = cep_endereco || dados.cep_endereco;
       usuario.endereco = endereco || dados.endereco;
       usuario.email = email || dados.email;
       usuario.data_nascimento = data_nascimento || dados.data_nascimento;
 
       await usuario.save();
 
-      return response
-        .status(200)
-        .json({ mensagem: "Usuário alterado com sucesso!" });
+      return response.status(200).json(usuario);
     } catch (error) {
       console.error("Server error: " + error);
       return response.status(500).json({ mensagem: "Erro ao editar os dados" });
@@ -81,7 +71,7 @@ class UsuarioController {
 
   async deletarUsuario(request, response) {
     try {
-      const idUsuario = request.user.id;
+      const idUsuario = request.params.id;
       const usuario = await Usuario.findOne({
         where: { id: idUsuario },
       });
@@ -97,9 +87,7 @@ class UsuarioController {
         .json({ mensagem: "Usuario deletado com sucesso. ", usuario });
     } catch (error) {
       console.error("Server error: " + error);
-      return response
-        .status(500)
-        .json({ mensagem: "Erro ao deletar ussuario" });
+      return response.status(500).json({ mensagem: "Erro ao deletar usuario" });
     }
   }
 }

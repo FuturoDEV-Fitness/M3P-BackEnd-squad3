@@ -4,6 +4,7 @@ function verifyToken(request, response, next) {
   try {
     // Verifique se o cabeçalho de autorização está presente
     const authorizationHeader = request.headers.authorization;
+    console.log(authorizationHeader);
 
     if (!authorizationHeader) {
       return response.status(400).json({

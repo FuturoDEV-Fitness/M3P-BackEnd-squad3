@@ -4,12 +4,12 @@ const Local = require("../models/Local");
 const Usuario = require("../models/Usuario");
 
 class LocalController {
-  // Método para criar um novo local
   async criarLocal(request, response) {
     try {
+      const { idUsuario } = request;
       const dados = request.body;
 
-      const fieldRequired = object.value(dados);
+      // const fieldRequired = object.value(dados);
 
       // for (field of fieldRequired) {
       //   if (!dados[field]) {
@@ -20,37 +20,28 @@ class LocalController {
       //   }
       // }
 
-      // Validação dos dados
       if (
-        (!dados.nomeLocal ||
-          !dados.descricaoLocal ||
-          !dados.cep_endereco ||
-          !dados.rua_endereco ||
-          !dados.bairro_endereco ||
-          !dados.cidade_endereco ||
-          !dados.estado_endereco ||
-          !dados.numero_endereco,
-        !dados.idUsuario)
-      ) {
+        !dados.nomeLocal ||
+        !dados.descricao ||
+        !dados.cep_endereco ||
+        !dados.rua ||
+        !dados.bairro ||
+        !dados.cidade ||
+        !dados.estado ||
+        !dados.numero
+      )
         return response.status(400).json({
-          mensagem:
-            "Nome do local, CEP, localidade, tipos de exercícios e usuário são obrigatórios",
+          mensagem: "Nome do local, CEP, tipos de exercícios são obrigatórios",
         });
-      }
 
-      // Verifica se o usuário existe
-      const usuario = await Usuario.findByPk(dados.idUsuario);
-      if (!usuario) {
-        return response
-          .status(404)
-          .json({ mensagem: "Usuário não encontrado" });
-      }
+      const linkMap = `https://www.google.com/maps?q=${dados.latitude},${dados.longitude}`;
+      console.log(linkMap);
 
       const possuiCadastroLocal = await Local.findOne({
         where: {
-          nome_local: dados.nome_local,
-          cep: dados.cep_endereco,
-          numero_endereco: dados.numero_endereco,
+          nomeLocal: dados.nomeLocal,
+          cep_endereco: dados.cep_endereco,
+          numero: dados.numero,
         },
       });
 
@@ -60,23 +51,21 @@ class LocalController {
         });
       }
 
-      // Cria o local
       const local = await Local.create({
         nomeLocal: dados.nomeLocal,
-        descricao: dados.descricaoLocal,
+        descricao: dados.descricao,
         itens_checkbox: dados.itens_checkbox,
-        cep: dados.cep_endereco,
-        rua: dados.rua_endereco,
-        bairro: dados.bairro_endereco,
-        cidade: dados.cidade_endereco,
-        estado: dados.estado_endereco,
-        numero_endereco: dados.numero_endereco,
-        idUsuario: dados.idUsuario,
-        complemento_endereco: dados.complemento_endereco,
-        horario_funcionamento: dados.horario_funcionamento,
+        cep_endereco: dados.cep_endereco,
+        rua: dados.rua,
+        bairro: dados.bairro,
+        cidade: dados.cidade,
+        estado: dados.estado,
+        numero: dados.numero,
+        idUsuario: idUsuario,
+        complemento: dados.complemento,
         latitude: dados.latitude,
         longitude: dados.longitude,
-        google_maps_link: dados.google_maps_link,
+        linkMap: linkMap,
       });
 
       return response
@@ -90,71 +79,45 @@ class LocalController {
     }
   }
 
-  async listarTodos(request, response) {
-    try {
-      const { nomeLocal } = request.query;
-
-      const local = await Local.findAll({
-        order: [["nomeLocal", "ASC"]],
-        where: nomeLocal ? { nomeLocal: { [Op.like]: `%${nomeLocal}%` } } : {},
-        attributes: [
-          ["id", "identificador"],
-          "nomeLocal",
-          "descricaoLocal",
-          "itens_checkbox",
-          "rua_endereco",
-          "numero_endereco",
-          "bairro_endereco",
-          "cidade_endereco",
-          "estado_endereco",
-          "cep_endereco",
-          "horario_funcionamento",
-          "latitude",
-          "longitude",
-        ],
-      });
-
-      if (local.length === 0) {
-        return response
-          .status(404)
-          .json({ mensagem: "Não existe locais cadastrados" });
-      } else {
-        return response.json(local);
-      }
-    } catch (error) {
-      console.log("Server error: " + error);
-      response.status(500).json({ mensagem: "Erro ao listar locais" });
-    }
-  }
-
-  // Método para listar todos os locais do usuário autenticado
   async listarLocaisUsuario(request, response) {
     try {
-      const idUsuario = request.idUsuario;
+      const { idUsuario } = request;
 
-      // Encontra todos os locais do usuário autenticado
-      const locais = await Local.findAll({ where: { idUsuario } });
+      const locais = await Local.findAll({
+        where: {
+          idUsuario: idUsuario,
+        },
 
-      return response.status(200).json({
-        mensagem: "Buscado com sucesso! Locais cadastrados por este usuário",
-        locais,
+        // attributes: [
+        //   "idLocal",
+        //   "nomeLocal",
+        //   "cep_endereco",
+        //   "cidade",
+        //   "numero",
+        //   "estado",
+        //   "descricao",
+        //   "itens_checkbox",
+        //   "linkMap",
+        // ],
+        include: [
+          {
+            model: Usuario,
+            attributes: ["nome", "id"],
+          },
+        ],
       });
+      response.json(locais);
     } catch (error) {
-      console.error("Server error: " + error);
-      return response
-        .status(500)
-        .json({ mensagem: "Houve um erro ao listar os locais" });
+      console.log(error);
+      response.status(500).json({ mensagem: "Erro ao listar os locais!" });
     }
   }
 
-  // Método para listar um local específico do usuário autenticado
   async listarPorId(request, response) {
     try {
-      const { idLocal } = request.params;
-      const idUsuario = request.idUsuario;
+      const idLocal = request.params.id;
 
-      // Encontra o local específico e verifica se pertence ao usuário autenticado
-      const local = await Local.findOne({ where: { id: idLocal, idUsuario } });
+      const local = await Local.findByPk(idLocal);
 
       if (!local) {
         return response
@@ -162,9 +125,7 @@ class LocalController {
           .json({ mensagem: "Local não encontrado ou acesso não autorizado" });
       }
 
-      return response
-        .status(200)
-        .json({ mensagem: "Local buscado com sucesso!", local });
+      return response.status(200).json(local);
     } catch (error) {
       console.error("Server error: " + error);
       return response
@@ -173,64 +134,58 @@ class LocalController {
     }
   }
 
-  // Método para atualizar um local específico do usuário autenticado
   async atualizar(request, response) {
     try {
-      const { idLocal } = request.params;
+      const idLocal = request.params.id;
+      const { idUsuario } = request;
       const dados = request.body;
-      const idUsuario = request.idUsuario;
+      console.log(dados);
+      // const {
+      //   nomeLocal,
+      //   descricao,
+      //   itens_checkbox,
+      //   rua,
+      //   numero,
+      //   bairro,
+      //   cidade,
+      //   estado,
+      //   cep_endereco,
+      //   complemento,
+      //   latitude,
+      //   longitude,
+      // } = dados;
 
       // Encontra o local específico e verifica se pertence ao usuário autenticado
-      const local = await Local.findOne({
-        where: { idLocal, idUsuario },
-      });
-
+      const local = await Local.findByPk(idLocal);
       if (!local) {
         return response
           .status(404)
           .json({ mensagem: "Local não encontrado ou acesso não autorizado" });
       }
 
-      // const {
-      //   nomeLocal,
-      //   descricaoLocal,
-      //   itens_checkbox,
-      //   rua_endereco,
-      //   numero_endereco,
-      //   bairro_endereco,
-      //   cidade_endereco,
-      //   estado_endereco,
-      //   cep_endereco,
-      //   complemento_endereco,
-      //   horario_funcionamento,
-      //   latitude,
-      //   longitude,
-      //   google_maps_link,
-      // } = dados;
+      const linkMap = `https://www.google.com/maps?q=${dados.latitude},${dados.longitude}`;
 
       // Atualiza o local
-      local.nomeLocal = nome || dados.nomeLocal;
-      local.descricaoLocal = descricaoLocal || dados.descricaoLocal;
-      (local.itens_checkbox = itens_checkbox || dados.itens_checkbox),
-        (local.rua_endereco = rua_endereco || dados.rua_endereco);
-      local.numero_endereco = numero_endereco || dados.numero_endereco;
-      local.bairro_endereco = bairro_endereco || dados.bairro_endereco;
-      local.cidade_endereco = cidade_endereco || dados.cidade_endereco;
-      local.estado_endereco = estado_endereco || dados.estado_endereco;
-      local.cep_endereco = cep_endereco || dados.cep_endereco;
-      (local.complemento_endereco =
-        complemento_endereco || dados.complemento_endereco),
-        (local.horario_funcionamento =
-          horario_funcionamento || dados.horario_funcionamento);
-      local.latitude = latitude != undefined ? latitude : local.latitude;
-      local.longitude = longitude !== undefined ? longitude : local.longitude;
-      local.google_maps_link = google_maps_link || local.google_maps_link;
+      local.nomeLocal = dados.nomeLocal;
+      local.descricao = dados.descricao;
+      local.itens_checkbox = dados.itens_checkbox;
+      local.rua = dados.rua;
+      local.numero = dados.numero;
+      local.bairro = dados.bairro;
+      local.cidade = dados.cidade;
+      local.estado = dados.estado;
+      local.cep_endereco = dados.cep_endereco;
+      local.complemento = dados.complemento;
+      local.latitude = dados.latitude;
+      local.longitude = dados.longitude;
+
+      // local.longitude = local.longitude !== undefined ? local.longitude : local.longitude;
+      local.linkMap = linkMap;
+      local.idUsuario = idUsuario;
 
       await local.save();
 
-      return response
-        .status(200)
-        .json({ mensagem: "Local editado com sucesso! ", local });
+      return response.status(200).json(local);
     } catch (error) {
       console.error("Server erro: " + error);
       return response.status(500).json({
@@ -239,15 +194,13 @@ class LocalController {
     }
   }
 
-  // Método para Deletar um local específico do usuário autenticado
   async excluir(request, response) {
     try {
-      const { idLocal } = request.params;
-      const idUsuario = request.usuarioId;
+      const idLocal = request.params.id;
+      const { idUsuario } = request;
 
-      // Encontra o local específico e verifica se pertence ao usuário autenticado
       const local = await Local.findOne({
-        where: { id: idLocal, idUsuario },
+        where: { idLocal: idLocal, idUsuario: idUsuario },
       });
 
       if (!local) {
@@ -259,7 +212,6 @@ class LocalController {
           .json({ mensagem: "Local não encontrado ou acesso não autorizado" });
       }
 
-      // Exclui o local
       await local.destroy();
 
       return response
@@ -268,13 +220,12 @@ class LocalController {
     } catch (error) {
       console.error("Erro no método excluir:", error);
 
-      // Mensagem detalhada de erro
-      if (error.name === "SequelizeForeignKeyConstraintError") {
+      if (error.nomeLocal === "SequelizeForeignKeyConstraintError") {
         return response.status(400).json({
           mensagem:
             "Erro de restrição de chave estrangeira ao excluir o local.",
         });
-      } else if (error.name === "SequelizeDatabaseError") {
+      } else if (error.nomeLocal === "SequelizeDatabaseError") {
         return response
           .status(500)
           .json({ mensagem: "Erro no banco de dados ao excluir o local." });
@@ -292,7 +243,6 @@ class LocalController {
       const { idLocal } = request.params;
       const idUsuario = request.usuarioId;
 
-      // Encontra o local específico e verifica se pertence ao usuário autenticado
       const local = await Local.findOne({
         where: { id: idLocal, idUsuario },
       });
@@ -303,14 +253,12 @@ class LocalController {
           .json({ mensagem: "Local não encontrado ou acesso não autorizado" });
       }
 
-      // Verifica se latitude e longitude estão presentes
       if (!local.latitude || !local.longitude) {
         return response.status(404).json({
           mensagem: "Coordenadas não encontradas para o endereço fornecido",
         });
       }
 
-      // Gerar o link do Google Maps com base na latitude e longitude no formato correto
       const googleMapsLink = `https://www.google.com/maps/place/@${local.latitude},${local.longitude},15z`;
 
       return response.status(200).json({
@@ -329,12 +277,10 @@ class LocalController {
     try {
       const { cep_endereco } = request.query;
 
-      // Verifica se o endereço foi fornecido
       if (!cep_endereco) {
         return response.status(400).json({ mensagem: "CEP não fornecido" });
       }
 
-      // Consulta a API do Nominatim para obter as coordenadas
       const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
         cep_endereco
       )}&format=json&limit=1`;
@@ -347,7 +293,6 @@ class LocalController {
         });
       }
 
-      // Gerar o link do Google Maps com base na latitude e longitude no formato correto
       const googleMapsLink = `https://www.google.com/maps/place/@${locationData.lat},${locationData.lon}`;
 
       return response.status(200).json({ googleMapsLink });

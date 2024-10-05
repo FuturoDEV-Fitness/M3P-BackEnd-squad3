@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      descricaoLocal: {
+      descricao: {
         type: Sequelize.TEXT(300),
         allowNull: false,
       },
@@ -26,45 +26,45 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-      rua_endereco: {
+      rua: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      numero_endereco: {
+      numero: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      bairro_endereco: {
+      bairro: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      cidade_endereco: {
+      cidade: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      estado_endereco: {
+      estado: {
         type: Sequelize.STRING,
         allowNull: true,
       },
       cep_endereco: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
-      complemento_endereco: {
+      complemento: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      horario_funcionamento: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       latitude: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       longitude: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+      },
+      linkMap: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       idUsuario: {
         type: Sequelize.INTEGER,

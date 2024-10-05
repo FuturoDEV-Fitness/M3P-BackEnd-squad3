@@ -8,5 +8,9 @@ autenticUsuarioRoutes.post(
   "/cadastroUsuario",
   AutenticUsuarioController.criarConta
 );
+autenticUsuarioRoutes.get(
+  "/listarTodosUsu",
+  AutenticUsuarioController.listarUsuarios
+);
 
 module.exports = autenticUsuarioRoutes;

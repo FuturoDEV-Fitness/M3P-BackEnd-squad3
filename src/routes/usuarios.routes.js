@@ -3,7 +3,7 @@ const UsuarioController = require("../controllers/UsuarioController");
 
 const usuarioRoutes = Router();
 
-usuarioRoutes.get("/", UsuarioController.listarUsuarios);
+usuarioRoutes.get("/:id", UsuarioController.listarUm);
 usuarioRoutes.put("/:id", UsuarioController.editarUsuario);
 usuarioRoutes.delete("/:id", UsuarioController.deletarUsuario);
 
