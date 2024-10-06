@@ -8,18 +8,6 @@ class LocalController {
     try {
       const { idUsuario } = request;
       const dados = request.body;
-
-      // const fieldRequired = object.value(dados);
-
-      // for (field of fieldRequired) {
-      //   if (!dados[field]) {
-      //     return response.status(400).json({
-      //       mensagem:
-      //         "Nome do local, CEP, localidade, tipos de exercícios e usuário são obrigatórios",
-      //     });
-      //   }
-      // }
-
       if (
         !dados.nomeLocal ||
         !dados.descricao ||
@@ -88,17 +76,6 @@ class LocalController {
           idUsuario: idUsuario,
         },
 
-        // attributes: [
-        //   "idLocal",
-        //   "nomeLocal",
-        //   "cep_endereco",
-        //   "cidade",
-        //   "numero",
-        //   "estado",
-        //   "descricao",
-        //   "itens_checkbox",
-        //   "linkMap",
-        // ],
         include: [
           {
             model: Usuario,
@@ -140,22 +117,7 @@ class LocalController {
       const { idUsuario } = request;
       const dados = request.body;
       console.log(dados);
-      // const {
-      //   nomeLocal,
-      //   descricao,
-      //   itens_checkbox,
-      //   rua,
-      //   numero,
-      //   bairro,
-      //   cidade,
-      //   estado,
-      //   cep_endereco,
-      //   complemento,
-      //   latitude,
-      //   longitude,
-      // } = dados;
 
-      // Encontra o local específico e verifica se pertence ao usuário autenticado
       const local = await Local.findByPk(idLocal);
       if (!local) {
         return response
@@ -165,7 +127,6 @@ class LocalController {
 
       const linkMap = `https://www.google.com/maps?q=${dados.latitude},${dados.longitude}`;
 
-      // Atualiza o local
       local.nomeLocal = dados.nomeLocal;
       local.descricao = dados.descricao;
       local.itens_checkbox = dados.itens_checkbox;
@@ -179,7 +140,6 @@ class LocalController {
       local.latitude = dados.latitude;
       local.longitude = dados.longitude;
 
-      // local.longitude = local.longitude !== undefined ? local.longitude : local.longitude;
       local.linkMap = linkMap;
       local.idUsuario = idUsuario;
 

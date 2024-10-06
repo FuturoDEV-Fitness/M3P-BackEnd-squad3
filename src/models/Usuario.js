@@ -1,8 +1,6 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
-// const Local = require("./Local");
-// const Avaliacao = require("./Avaliacao");
 
 const Usuario = connection.define("usuarios", {
   id: {
@@ -56,12 +54,5 @@ Usuario.beforeSave((usuario) => {
 
   return usuario;
 });
-
-// Usuario.associate = function (models) {
-//   Usuario.hasMany(models.Avaliacao, {
-//     foreignKey: "idUsuario",
-//     as: "avaliacoes",
-//   });
-// };
 
 module.exports = Usuario;

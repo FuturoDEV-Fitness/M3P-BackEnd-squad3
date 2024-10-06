@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-// const Usuario = require("./Usuario");
 const Local = require("./Local");
 
 const Avaliacao = connection.define("avaliacoes", {
@@ -39,9 +38,5 @@ const Avaliacao = connection.define("avaliacoes", {
     },
   },
 });
-
-// Avaliacao.associate = (models) => {
-//   Avaliacao.belongsTo(models.locais, { foreignKey : "idLocal" })
-// }
 
 module.exports = Avaliacao;

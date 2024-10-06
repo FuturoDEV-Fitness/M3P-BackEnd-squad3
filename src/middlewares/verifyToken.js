@@ -2,7 +2,6 @@ const { verify } = require("jsonwebtoken");
 
 function verifyToken(request, response, next) {
   try {
-    // Verifique se o cabeçalho de autorização está presente
     const authorizationHeader = request.headers.authorization;
     console.log(authorizationHeader);
 
@@ -12,7 +11,6 @@ function verifyToken(request, response, next) {
       });
     }
 
-    // Verifique o formato do token
     const [scheme, token] = authorizationHeader.split(" ");
 
     if (scheme !== "Bearer" || !token) {
@@ -21,10 +19,8 @@ function verifyToken(request, response, next) {
       });
     }
 
-    // Verifique o token JWT usando a chave secreta
     const result = verify(token, process.env.JWT_SECRET);
 
-    // Anexe o ID do usuário ao objeto de solicitação
     request.idUsuario = result.id;
 
     next();

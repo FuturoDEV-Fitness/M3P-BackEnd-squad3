@@ -71,27 +71,10 @@ const Local = connection.define("locais", {
       key: "id",
     },
   },
-
-  // Usuario.hasMany(Post, { onDelete: 'CASCADE' });
 });
 
 Local.belongsTo(Usuario, {
   foreignKey: "idUsuario",
 });
-
-// Local.associate = function (models) {
-//   Local.belongsTo(models.Usuario, {
-//     foreignKey: "idUsuario",
-//     as: "usuario",
-//   });
-
-// };
-
-// Local.associate = function (models) {
-//   Local.hasMany(models.Avaliacao, {
-//     foreignKey: "idLocal",
-//     as: "avaliacoes",
-//   });
-// };
 
 module.exports = Local;
