@@ -3,7 +3,7 @@ const { verify } = require("jsonwebtoken");
 function verifyToken(request, response, next) {
   try {
     const authorizationHeader = request.headers.authorization;
-    console.log(authorizationHeader);
+    // console.log(authorizationHeader);
 
     if (!authorizationHeader) {
       return response.status(400).json({
