@@ -17,13 +17,17 @@ module.exports = {
         allowNull: false,
       },
       sexo: {
-        type: Sequelize.ENUM("Masculino, Feminino, Outro"),
+        type: Sequelize.ENUM("Masculino", "Feminino", "Outro"),
         allowNull: false,
       },
       cpf: {
         type: Sequelize.STRING(11),
         allowNull: false,
         unique: true,
+      },
+      cep: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       endereco: {
         type: Sequelize.STRING,
@@ -42,9 +46,9 @@ module.exports = {
         type: Sequelize.STRING(10),
         allowNull: true,
       },
-      isAdmin: {
+      isLog: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

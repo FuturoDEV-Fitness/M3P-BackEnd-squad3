@@ -40,7 +40,7 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/ThaisEFAG/Exercita_1.1_Back-end.git
+   git clone https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad3.git
    cd exercita365
    ```
 
@@ -112,6 +112,12 @@ Sinta-se à vontade para abrir Issues e Pull Requests. Siga as seguintes conven�
 - **refactor**: Refatorar o código.
 - **test**: Adicionar ou corrigir testes.
 - **chore**: Atualizações em tarefas de manutenção (builds, pacotes, etc).
+
+  ## Melhorias
+
+- Criar uma tabela de somente de exercícios
+- Adicionar uma caixa para diálogo com o administrador
+- adicionar formulário para críticas e sujestões
 
 ## 👤 Autores
 

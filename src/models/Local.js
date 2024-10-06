@@ -1,94 +1,97 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
+const { link } = require("../routes/usuarios.routes");
+const Usuario = require("./Usuario");
 
-const Local = connection.define(
-  "locais",
-  {
-    idLocal: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
-    },
-    nomeLocal: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    descricaoLocal: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    itens_checkbox: {
-      type: DataTypes.JSONB,
-      allowNull: true,
-    },
-    rua_endereco: {
-      type: DataTypes.STRING(90),
-      allowNull: true,
-    },
-    numero_endereco: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    bairro_endereco: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    cidade_endereco: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    estado_endereco: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    cep_endereco: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    complemento_endereco: {
-      type: DataTypes.STRING(50),
-      allowNull: true,
-    },
-    horario_funcionamento: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    latitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    longitude: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    google_maps_link: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    idUsuario: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "usuarios",
-        key: "id",
-      },
-    },
-
-    // Usuario.hasMany(Post, { onDelete: 'CASCADE' });
+const Local = connection.define("locais", {
+  idLocal: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
   },
-  {
-    timestamps: true,
-    tableName: "exercise_locals",
-  }
-);
+  nomeLocal: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  descricao: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  itens_checkbox: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+  },
+  rua: {
+    type: DataTypes.STRING(90),
+    allowNull: true,
+  },
+  numero: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  bairro: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cidade: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  estado: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  cep_endereco: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  complemento: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
+  latitude: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  longitude: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  linkMap: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  idUsuario: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "usuarios",
+      key: "id",
+    },
+  },
 
-Local.associate = function (models) {
-  Local.hasMany(models.Rating, {
-    foreignKey: "idLocal",
-    as: "rating",
-  });
-};
+  // Usuario.hasMany(Post, { onDelete: 'CASCADE' });
+});
+
+Local.belongsTo(Usuario, {
+  foreignKey: "idUsuario",
+});
+
+// Local.associate = function (models) {
+//   Local.belongsTo(models.Usuario, {
+//     foreignKey: "idUsuario",
+//     as: "usuario",
+//   });
+
+// };
+
+// Local.associate = function (models) {
+//   Local.hasMany(models.Avaliacao, {
+//     foreignKey: "idLocal",
+//     as: "avaliacoes",
+//   });
+// };
 
 module.exports = Local;
