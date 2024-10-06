@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const routes = require("./routes/routes");
 const connection = require("./database/connection");
+const SwaggerUI = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/doc.swagger.json");
 
 require("dotenv").config();
 
@@ -12,6 +14,7 @@ class Server {
     this.middlewares();
     this.database();
     this.routes();
+    this.initializeSwagger();
     this.initializeServer();
   }
 
@@ -36,6 +39,13 @@ class Server {
     console.log("Executando rotas");
     this.server.use(routes);
     console.log("Rotas executadas");
+  }
+
+
+  async initializeSwagger() {
+    console.log("Inicializando Swagger");
+    this.server.use("/api-docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDocument));
+    console.log("Swagger inicializado");
   }
 
   async initializeServer() {
