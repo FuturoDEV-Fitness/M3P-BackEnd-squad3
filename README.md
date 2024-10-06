@@ -77,15 +77,15 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 ## 📡 Endpoints
 
 - **POST** `/login`: Login no sistema.
-- **POST** `/users`: Cadastro de novos usuários.
-- **GET** `/users`: Listagem de usuários.
-- **PUT** `/users/:id`: Edição de informações do usuário.
-- **DELETE** `/users/:id`: Exclusão de um usuário.
+- **POST** `/autentic/cadastroUsuario`: Cadastro de novos usuários.
+- **GET** `/autentic/listarTodosUsu`: Listagem de usuários.
+- **PUT** `/usuarios/:id`: Edição de informações do usuário.
+- **DELETE** `/usuarios/:id`: Exclusão de um usuário.
 - **GET** `/dashboard`: Visão geral dos dados.
-- **POST** `/locations`: Cadastro de locais para atividade física.
-- **GET** `/locations`: Listagem de locais para atividade física.
-- **PUT** `/locations/:id`: Edição de informações do local.
-- **DELETE** `/locations/:id`: Exclusão de um local para atividade física.
+- **POST** `/locais`: Cadastro de locais para atividade física.
+- **GET** `/locais-publi/getAll`: Listagem de locais para atividade física.
+- **PUT** `/locais/:id`: Edição de informações do local.
+- **DELETE** `/locais/:id`: Exclusão de um local para atividade física.
 
 ## 📦 Migrations
 
@@ -116,6 +116,7 @@ Sinta-se à vontade para abrir Issues e Pull Requests. Siga as seguintes conven�
   ## Melhorias
 
 - Criar uma tabela de somente de exercícios
+- Adicionar uma tabela para armazenamento de logs de logins
 - Adicionar uma caixa para diálogo com o administrador
 - adicionar formulário para críticas e sujestões
 
