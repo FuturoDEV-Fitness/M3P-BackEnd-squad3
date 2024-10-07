@@ -1,8 +1,11 @@
 const Usuario = require("../models/Usuario");
 const { compareSync } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { isLog } = require("./UsuarioController");
 const padraoEmail = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 const padraoCpf = new RegExp(/^\d{11}$/);
+const { hashSync } = require("bcryptjs");
+const { password } = require("../config/database.config");
 
 class AutenticUsuarioController {
   async criarConta(request, response) {
@@ -65,6 +68,8 @@ class AutenticUsuarioController {
           .json({ mensagem: "Usuario já possui cadastro" });
       }
 
+      const senhaCripto = await hashSync(dados.password, 10);
+
       const usuario = await Usuario.create({
         nome: dados.nome,
         sexo: dados.sexo,
@@ -72,9 +77,9 @@ class AutenticUsuarioController {
         cep: dados.cep,
         endereco: dados.endereco,
         email: dados.email,
-        password_hash: dados.password,
+        password_hash: senhaCripto,
         data_nascimento: dados.data_nascimento,
-        isLog: dados.isLog,
+        // isLog: dados.isLog,
       });
       response.status(201).json({
         nome: usuario.nome,
@@ -102,8 +107,11 @@ class AutenticUsuarioController {
       if (!user) {
         return response.status(404).json({ mensagem: "Conta não encontrada" });
       }
+      console.log("Senha enviada:", dados.password);
+      console.log("Hash do banco:", user.password_hash);
 
       const senhaCorreta = compareSync(dados.password, user.password_hash);
+      console.log(senhaCorreta);
 
       if (senhaCorreta == false) {
         return response
@@ -114,6 +122,9 @@ class AutenticUsuarioController {
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
+
+      console.log(token);
+
       return response
         .status(200)
         .json({ token: token, usuarioName: user.nome, usuarioId: user.id });
