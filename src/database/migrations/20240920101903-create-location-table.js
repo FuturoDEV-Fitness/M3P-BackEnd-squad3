@@ -23,7 +23,7 @@ module.exports = {
         allowNull: false,
       },
       itens_checkbox: {
-        type: Sequelize.JSONB,
+        type: Sequelize.STRING(),
         allowNull: true,
       },
       rua: {
