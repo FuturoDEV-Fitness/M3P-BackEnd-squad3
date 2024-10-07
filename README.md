@@ -41,7 +41,6 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 
    ```bash
    git clone https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad3.git
-   cd exercita365
    ```
 
 2. Instale as dependências:
@@ -65,13 +64,13 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 5. Inicie o servidor:
 
    ```bash
-   npm start
+   npm run start:dev
    ```
 
    Para desenvolvimento com reinicialização automática:
 
    ```bash
-   npm run dev
+   npm run start:dev
    ```
 
 ## 📡 Endpoints
@@ -81,7 +80,6 @@ Antes de começar, verifique se você tem as seguintes ferramentas instaladas:
 - **GET** `/autentic/listarTodosUsu`: Listagem de usuários.
 - **PUT** `/usuarios/:id`: Edição de informações do usuário.
 - **DELETE** `/usuarios/:id`: Exclusão de um usuário.
-- **GET** `/dashboard`: Visão geral dos dados.
 - **POST** `/locais`: Cadastro de locais para atividade física.
 - **GET** `/locais-publi/getAll`: Listagem de locais para atividade física.
 - **PUT** `/locais/:id`: Edição de informações do local.
