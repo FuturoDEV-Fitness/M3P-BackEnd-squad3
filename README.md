@@ -95,7 +95,7 @@ Neste projeto, utilizamos o Sequelize para gerenciar as migrations, o que facili
 
 Para visualizar a modelagem das tabelas e as migrations correspondentes, consulte o arquivo anexado abaixo.
 
-![alt text](src/assets/img/image.png)
+![alt text](src/assets/img/model_bd.png)
 
 ## 🚀 Deploy
 
