@@ -1,4 +1,4 @@
-# 🏋️ Exercita365:1.1
+# 🏋️ ![alt text](src/assets/img/logo.png)
 
 ## 📖 Descrição
 
@@ -122,4 +122,4 @@ Sinta-se à vontade para abrir Issues e Pull Requests. Siga as seguintes conven�
 
 ## 👤 Autores
 
-hiediferreira, juniorpinhodev, ThaisEFAG
+https://github.com/hiediferreira, https://github.com/juniorpinhodev, https://github.com/ThaisEFAG, williansourib
