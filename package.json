@@ -4,7 +4,7 @@
   "description": "Progeto final mod_3",
   "main": "index.js",
   "scripts": {
-    "start:prod": "nodemon src/index.js",
+    "start:prod": "sequelize db:migrate && node src/index.js",
     "start:dev": "nodemon src/index.js",
     "swagger": "node ./autoGen.swagger.js"
   },

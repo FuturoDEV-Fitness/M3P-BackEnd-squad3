@@ -20,7 +20,9 @@ class Server {
 
   async middlewares() {
     console.log("Executando middlewares");
-    this.server.use(cors());
+    this.server.use(
+      cors({ origin: "https://m3p-frontend-squad3.onrender.com" })
+    );
     this.server.use(express.json());
     console.log("Middlewares executados");
   }
@@ -41,10 +43,13 @@ class Server {
     console.log("Rotas executadas");
   }
 
-
   async initializeSwagger() {
     console.log("Inicializando Swagger");
-    this.server.use("/api-docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDocument));
+    this.server.use(
+      "/api-docs",
+      SwaggerUI.serve,
+      SwaggerUI.setup(swaggerDocument)
+    );
     console.log("Swagger inicializado");
   }
 
