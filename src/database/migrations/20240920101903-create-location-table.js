@@ -89,7 +89,6 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
       },
     });
   },

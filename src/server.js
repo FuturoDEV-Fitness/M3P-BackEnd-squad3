@@ -20,9 +20,7 @@ class Server {
 
   async middlewares() {
     console.log("Executando middlewares");
-    this.server.use(
-      cors({ origin: "https://m3p-frontend-squad3.onrender.com" })
-    );
+    this.server.use(cors());
     this.server.use(express.json());
     console.log("Middlewares executados");
   }
