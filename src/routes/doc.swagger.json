@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Exercita365",
+    "title": "BuscaFit",
     "description": "API de local para atividade física",
     "version": "1.0"
   },
